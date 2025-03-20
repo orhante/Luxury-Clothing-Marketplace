@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/frontend/css/Style.css">
 </head>
 <body>
     <!-- Navbar -->
@@ -29,6 +29,7 @@
                     <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">Cart</a></li> <!-- Added Cart -->
                 </ul>
             </div>
         </div>
@@ -37,19 +38,16 @@
     <!-- Homepage Content -->
     <section id="home" class="text-center p-5" style="background-color: #013220; color: white;">
         <h1>Welcome to Luxury Clothing</h1>
-        <p>Shop the latest premium fashion trends</p>
+        <p>Timeless Style, Unparalleled Craftsmanship.</p>
         <a href="#products" class="btn btn-outline-light">Shop Now</a>
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="container-fluid my-5">
+    <section id="products" class="container my-5">
         <h2 class="text-center text-white">Featured Products</h2>
-        <div class="container">
-            <div class="row" id="product-container"></div>
-        </div>
+        <div class="row" id="product-container"></div>
     </section>
     
-
     <!-- Footer -->
     <footer class="text-center p-3" style="background-color: #013220; color: white;">
         <p>&copy; 2025 Luxury Clothing Marketplace. All rights reserved.</p>
@@ -57,32 +55,102 @@
 
     <!-- About Us Modal -->
     <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="aboutModalLabel">About Us</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">About Us</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        Welcome to <strong>Luxury Clothing Marketplace</strong>, your ultimate destination for premium fashion.
-                        We are dedicated to providing high-quality, stylish, and luxury apparel that elevates your wardrobe. 
-                        Our carefully curated selection includes top designer brands, exclusive collections, and timeless pieces.
-                    </p>
-                    <p>
-                        Our mission is to make luxury fashion accessible and convenient. We partner with renowned designers and 
-                        emerging brands to offer a diverse range of products, ensuring that every customer finds something unique.
-                        Whether you are looking for the latest runway trends, classic essentials, or limited-edition pieces, 
-                        we have something for you.
-                    </p>
-                    <p>
-                        At Luxury Clothing Marketplace, we prioritize customer satisfaction, authenticity, and sustainability.
-                        We strive to provide a seamless shopping experience with secure transactions, fast shipping, and 
-                        exceptional customer service.
-                    </p>
-                    <p>
-                        Thank you for choosing Luxury Clothing Marketplace. Stay stylish, stay luxurious.
-                    </p>
+                    <p>Welcome to <strong>Luxury Clothing Marketplace</strong>, your ultimate destination for premium fashion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="cart-modal-body">
+                    <p>Your cart is empty.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark w-100" data-bs-dismiss="modal">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="product-modal-title">Product Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="product-modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" id="add-to-cart-btn" onclick="addToCartFromModal()">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="login-form" onsubmit="handleLogin(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="login-email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="register-form" onsubmit="handleRegister(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="register-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="register-email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="register-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Register</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -94,24 +162,27 @@
     <!-- JavaScript for Product Display -->
     <script>
         const products = [
-            { name: "Jacket", price: 250, image: "images/1.jpg" },
-            { name: "Sunglasses", price: 180, image: "images/2.jpg" },
-            { name: "Belt", price: 150, image: "images/3.jpg" },
-            { name: "Sweater", price: 200, image: "images/4.jpg" },
-            { name: "Sneakers", price: 220, image: "images/5.jpg" },
-            { name: "Watch", price: 450, image: "images/6.jpg" },
-            { name: "Shirt", price: 180, image: "images/7.jpg" },
-            { name: "Wallet", price: 170, image: "images/8.jpg" },
-            { name: "Summer Shoes", price: 200, image: "images/9.jpg" },
+            { name: "Sweaters", price: 200, image: "/frontend/static/images/ralph.jpg" },
+            { name: "Sunglasses", price: 200, image: "/frontend/static/images/product6.webp" },
+            { name: "Belt", price: 350, image: "/frontend/static/images/belt.jpg" },
+            { name: "Jeans", price: 200, image: "/frontend/static/images/product5.jpg" },
+            { name: "Sneakers", price: 650, image: "/frontend/static/images/product2.png" },
+            { name: "Watch", price: 500, image: "/frontend/static/images/cartier.webp" },
+            { name: "Jacket", price: 750, image: "/frontend/static/images/product4.jpg" },
+            { name: "Wallet", price: 200, image: "/frontend/static/images/wallet1.jpg" },
+            { name: "Summer Shoes", price: 600, image: "/frontend/static/images/summerwalk.webp" },
         ];
+
+        let cart = [];
+        let currentProductIndex = null; // Store the current product being viewed in the modal
 
         const productContainer = document.getElementById("product-container");
 
         products.forEach((product, index) => {
-            const productCard = `
+            productContainer.innerHTML += `
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                        <img src="${product.image}" class="card-img-top product-img" alt="${product.name}">
                         <div class="card-body text-center">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">$${product.price}</p>
@@ -120,37 +191,49 @@
                     </div>
                 </div>
             `;
-            productContainer.innerHTML += productCard;
         });
 
         function showProductDetails(index) {
+            currentProductIndex = index;
             const product = products[index];
-            document.getElementById('product-modal-title').innerText = product.name;
             document.getElementById('product-modal-body').innerHTML = `
-                <img src="${product.image}" class="img-fluid mb-3" alt="${product.name}">
+                <img src="${product.image}" class="img-fluid mb-3">
                 <p>Price: $${product.price}</p>
-                <p>More details about the product can be added here.</p>
+                <p>${product.name} - A luxury item for your wardrobe.</p>
             `;
+            document.getElementById('product-modal-title').innerText = product.name;
+        }
+
+        function addToCartFromModal() {
+            const product = products[currentProductIndex];
+            cart.push(product);
+            alert(`${product.name} has been added to your cart.`);
+        }
+
+        function showCart() {
+            const cartBody = document.getElementById("cart-modal-body");
+            if (cart.length > 0) {
+                cartBody.innerHTML = cart.map(product => `<p>${product.name} - $${product.price}</p>`).join('');
+            } else {
+                cartBody.innerHTML = '<p>Your cart is empty.</p>';
+            }
+        }
+
+        document.getElementById('cartModal').addEventListener('show.bs.modal', showCart);
+
+        // Login and Register form handling
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            console.log('Login Details:', { email, password });
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            console.log('Register Details:', { name, email, password });
         }
     </script>
-
-    <!-- Product Details Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="product-modal-title">Product Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="product-modal-body">
-                    <!-- Product details will go here -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
