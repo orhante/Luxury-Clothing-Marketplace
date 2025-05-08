@@ -1,0 +1,69 @@
+  /api/orders:
+    get:
+      summary: Get all orders
+      responses:
+        '200':
+          description: List of orders
+    post:
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required: [user_id, product_id, quantity]
+      responses:
+        '201':
+          description: Order created
+
+  /api/orders/{id}:
+    get:
+      summary: Get an order by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order details
+    put:
+      summary: Update an order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: Order updated
+    delete:
+      summary: Delete an order
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order deleted
