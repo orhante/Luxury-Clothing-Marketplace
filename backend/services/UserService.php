@@ -42,6 +42,20 @@ class UserService {
             'created_at' => date('Y-m-d H:i:s')
         ]);
     }
+    public function register($data) {
+    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+    return $this->dao->add($data);
+}
+
+public function login($email, $password) {
+    $user = $this->dao->get_by_email($email);
+    if ($user && password_verify($password, $user['password'])) {
+        unset($user['password']);
+        return $user;
+    }
+    return false;
+}
+
 
     // Update user
     public function update($id, $data) {
