@@ -54,4 +54,6 @@ public function delete($id) {
     return $stmt->execute();
 }
 }
+require_once __DIR__.'/routes/UserRoutes.php';
+
 ?>

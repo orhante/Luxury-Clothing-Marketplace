@@ -34,4 +34,8 @@ class UsersDao extends BaseDao {
         return $this->delete($id);
     }
 }
+public function get_by_email($email) {
+    return $this->query_unique("SELECT * FROM users WHERE email = ?", [$email]);
+}
+
 ?>
